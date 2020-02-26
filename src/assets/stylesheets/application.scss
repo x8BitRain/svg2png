@@ -1,0 +1,101 @@
+@import url(loader.scss);
+
+html {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%202%202%22%3E%3Cpath%20d%3D%22M1%202V0h1v1H0v1z%22%20fill-opacity%3D%22.05%22%2F%3E%3C%2Fsvg%3E);
+  background-size: 16px 16px;
+  background-color: #f2f2f2;
+  transition: background-color 0.2s ease-in-out;
+  height: 100vh;
+  width: 100vw;
+  margin:0;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden !important;
+  position: fixed;
+}
+
+#controls {
+  display:grid;
+  width:100%;
+  button, input {
+    margin: 10px 0 10px 0;
+  }
+  input {
+    
+  }
+  input[type='checkbox'] {
+    margin: 0 7px 1px 0;
+  }
+  label {
+    color:white;
+  }
+  output {
+    display: inline-flex;
+    margin:5px;
+  }
+
+}
+
+#controls-panel {
+  position: absolute;
+  width:330px;
+  top: 0px;
+  right: 0px;
+  height: 100vh;
+  background-color: #353535;
+  color: #FFFFFF;
+  padding: 2em;
+  z-index: 100;
+  overflow: scroll;
+}
+
+@media only screen and (max-width: 680px) {
+#controls-panel {
+    transform-origin: top right;
+    transform: scale(0.5);
+    height: 110%;
+  }
+}
+
+#scene {
+  height: auto;
+  width: 40vw;
+  position: absolute;
+  top: 10vh;
+  left: 10vw;
+  svg {
+    overflow: visible;
+  }
+}
+
+#outer-scene {
+    height: 1000vh;
+    width: 1000vw;
+    z-index: 1;
+    overflow: hidden;
+}
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
