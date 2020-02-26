@@ -26,7 +26,7 @@ class Interface extends Component {
 
   getSvgPng = () => {
     let download = document.querySelector("#scene > svg");
-    saveSvgAsPng(download, "corrupted.png", {scale: this.state.multiplier});
+    saveSvgAsPng(download, `svg2png_x${this.state.multiplier}.png`, {scale: this.state.multiplier});
   };
 
   render() {
@@ -39,7 +39,7 @@ class Interface extends Component {
         </label>
         <input
           className="uk-input"
-          placeholder="SVG URL"
+          placeholder="SVG URL / Markup"
           name="url"
           type="text"
           onChange={this.setSvgUrl}
@@ -47,7 +47,7 @@ class Interface extends Component {
         />
 
         <label
-         uk-tooltip="title: The higher the scale the longer it will take to render.; pos:left"
+         uk-tooltip="title: The higher the scale amount the longer it will take to render.; pos:left"
          className="uk-form-label"
          htmlFor="multiplier">
           Output image scale. <span style={{"fontSize": "10px"}}>(Browser may freeze for a second.)</span>
