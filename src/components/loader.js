@@ -2,8 +2,8 @@ import React from 'react';
 
 const Loader = (props) => {
   return (
-    <div class="box">
-      <div class="plane"></div>
+    <div className="box">
+      <div className="plane"></div>
     </div>
     );
 };

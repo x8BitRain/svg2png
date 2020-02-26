@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { saveSvgAsPng } from 'save-svg-as-png';
-import UIkit from "uikit";
 
 class Interface extends Component {
   constructor(props) {
@@ -35,7 +34,7 @@ class Interface extends Component {
       <React.Fragment>
         <label
          className="uk-form-label"
-         for="url">
+         htmlFor="url">
           Load SVG from URL or paste markup.
         </label>
         <input
@@ -50,8 +49,8 @@ class Interface extends Component {
         <label
          uk-tooltip="title: The higher the scale the longer it will take to render.; pos:left"
          className="uk-form-label"
-         for="multiplier">
-          Output image scale. <span style={{"font-size": "10px"}}>(Browser may freeze for a second.)</span>
+         htmlFor="multiplier">
+          Output image scale. <span style={{"fontSize": "10px"}}>(Browser may freeze for a second.)</span>
         </label>
         <input
           className="uk-input"
@@ -66,7 +65,7 @@ class Interface extends Component {
           Download
         </button>
         
-        <a href="https://github.com/x8BitRain/svg-emoji-corrupt"><span class="uk-label label-react">GitHub</span></a>
+        <a href="https://github.com/x8BitRain/svg-emoji-corrupt"><span className="uk-label label-react">GitHub</span></a>
       </React.Fragment>
     );
   }
