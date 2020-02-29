@@ -5,6 +5,7 @@ import Canvas from './components/canvas';
 import './assets/stylesheets/application.scss';
 import Interface from './components/interface';
 import panzoom from 'panzoom';
+let panzoomStart = false;
 
 class App extends Component {
     constructor(props) {
@@ -18,33 +19,26 @@ class App extends Component {
         this.setState({ svgLink: Url })
     }
 
-
-    ignorePanzoom = (e) => {
-        const element = document.getElementById('scene');
-        const controller = panzoom(element);
-        controller.pause();
-        console.log("pause");
-    }
-
     startPanzoom = (e) => {
+      if (!panzoomStart) {
         const element = document.getElementById('scene');
         const controller = panzoom(element);
-        controller.resume();
-        console.log("resume");
+        panzoomStart = true;
+      }
     }
 
 
     render () {
       return (
         <React.Fragment>
+          <div id="outer-scene" onMouseEnter={this.startPanzoom}>
+            <div id="scene">
+              <Canvas svgUrl={this.state.svgLink}/>
+            </div>
+          </div>
           <div id="controls-panel" >
             <div id="controls">
               <Interface url={this.setSvgLink} />
-            </div>
-          </div>
-          <div id="outer-scene" onMouseLeave={this.ignorePanzoom} onMouseEnter={this.startPanzoom}>
-            <div id="scene">
-              <Canvas svgUrl={this.state.svgLink}/>
             </div>
           </div>
         </React.Fragment>

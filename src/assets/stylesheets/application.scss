@@ -18,14 +18,15 @@ body {
   position: fixed;
 }
 
+#root {
+  display: flex;
+}
+
 #controls {
   display:grid;
   width:100%;
   button, input {
     margin: 10px 0 10px 0;
-  }
-  input {
-    
   }
   input[type='checkbox'] {
     margin: 0 7px 1px 0;
@@ -37,14 +38,22 @@ body {
     display: inline-flex;
     margin:5px;
   }
+  textarea {
+    overflow-x:hidden;
+    overflow-y:scroll;
+    max-height:15em;
+  }
+  #SvgViewBoxInput {
+    display:flex;
+  }
+  #bgFillColor {
+    width:100%;
+  }
 
 }
 
 #controls-panel {
-  position: absolute;
-  width:330px;
-  top: 0px;
-  right: 0px;
+  flex: 2.5;
   height: 100vh;
   background-color: #353535;
   color: #FFFFFF;
@@ -69,14 +78,15 @@ body {
   left: 10vw;
   svg {
     overflow: visible;
+    cursor: grab;
   }
 }
 
 #outer-scene {
-    height: 1000vh;
-    width: 1000vw;
-    z-index: 1;
-    overflow: hidden;
+  height: 1000vh;
+  z-index: 1;
+  flex: 5.5;
+  overflow: hidden;
 }
 
 

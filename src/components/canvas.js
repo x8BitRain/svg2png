@@ -5,7 +5,7 @@ import Loader from './loader';
 
 const Canvas = (props) => {
   const { svgUrl } = props;
-  return (<SVG src={svgUrl} loader={<Loader />} />);
+  return (<SVG id="mainSVG" src={svgUrl} loader={<Loader />} />);
 };
 
 export default Canvas;
