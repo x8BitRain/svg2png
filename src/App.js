@@ -11,8 +11,16 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            svgLink: "https://upload.wikimedia.org/wikipedia/commons/f/fd/Ghostscript_Tiger.svg"
+            svgLink: "https://upload.wikimedia.org/wikipedia/commons/f/fd/Ghostscript_Tiger.svg",
+            svgReady: false
         };
+    }
+
+    isSvgReady = (ready) => {
+      console.log(ready);
+      this.setState({
+        svgReady: ready
+      })
     }
 
     setSvgLink = (Url) => {
@@ -33,12 +41,12 @@ class App extends Component {
         <React.Fragment>
           <div id="outer-scene" onMouseEnter={this.startPanzoom}>
             <div id="scene">
-              <Canvas svgUrl={this.state.svgLink}/>
+              <Canvas svgUrl={this.state.svgLink} onReady={this.isSvgReady}/>
             </div>
           </div>
           <div id="controls-panel" >
             <div id="controls">
-              <Interface url={this.setSvgLink} />
+              <Interface url={this.setSvgLink} svgReady={this.state.svgReady} />
             </div>
           </div>
         </React.Fragment>

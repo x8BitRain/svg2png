@@ -1,17 +1,33 @@
 import React, { Component } from "react";
 import { saveSvgAsPng } from 'save-svg-as-png';
-let theSVG;
 let style;
+let theSVG;
+let svgVbBuffer = {};
+
+// TODO
+// Make a function that returns SVG instance
+// Bind Viewbox Inputs to SVG instance viewbox
+// Deploy again
 
 class Interface extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      svgContext: null,
       multiplier: 1, // Default scale multiplier
       encoderOptions: 10,
       backgroundColor: "",
       inlineCss: "",
+      svgViewBox: {}
     };
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.svgReady !== this.props.svgReady) {
+      console.log('major changes!');
+      theSVG = document.getElementById('mainSVG');
+      this.getSvgViewBox();
+    }
   }
 
   setMultiplierAmount = (e) => {
@@ -30,24 +46,39 @@ class Interface extends Component {
     this.setState({
       backgroundColor: (e.target.value)
     });
-    if (theSVG === undefined) {
-      theSVG = document.getElementById('mainSVG');
-    }
     theSVG.style.backgroundColor = e.target.value;
   };
 
-  // setSvgViewBox = (e) => {
-  //   if (theSVG === undefined) {
-  //     theSVG = document.getElementById('mainSVG');
-  //   }
-  //   SvgViewBox[e.target.name] = e.target.value;
-  //   theSVG.viewBox.animValVal = SvgViewBox;
-  //   console.log(SvgViewBox);
-  // };
+  getSvgViewBox = () => {
+    let svgVb = theSVG.getAttribute('viewBox').split(' ');
+    console.log(svgVb);
+    this.setState({
+      svgViewBox: {
+        x: svgVb[0],
+        y: svgVb[1],
+        w: svgVb[2],
+        h: svgVb[3]
+      }
+    }, () => {
+      svgVbBuffer = this.state.svgViewBox;
+    });
+  }
+
+  setSvgViewBox = (e) => {
+    let idx = e.target.name
+    svgVbBuffer[idx] = e.target.value;
+    //console.log(svgVbBuffer);
+    this.setState({
+      svgViewBox: svgVbBuffer
+    }, () => {
+      console.log(this.state.svgViewBox);
+      theSVG.setAttribute('viewBox', `0 0 0 0`)
+    })
+
+  }
 
   setInlineCss(e) {
-    if (theSVG === undefined) {
-      theSVG = document.getElementById('mainSVG');
+    if (style === undefined) {
       style = document.createElement('style');
       theSVG.appendChild(style);
       style.type = 'text/css';
@@ -63,6 +94,10 @@ class Interface extends Component {
       this.props.url(e);
     }
   };
+
+  componentDidMount() {
+    console.log(this.props.svgReady);
+  }
 
   getSvgPng = () => {
     let download = document.querySelector("#scene > svg");
@@ -130,32 +165,36 @@ class Interface extends Component {
           <input
             className="uk-input"
             placeholder="X"
-            name="X"
-            type="text"
+            name="x"
+            type="number"
+            value={this.state.svgViewBox.x}
             onChange={this.setSvgViewBox}
           />
           
           <input
             className="uk-input"
             placeholder="Y"
-            name="Y"
-            type="text"
+            name="y"
+            type="number"
+            value={this.state.svgViewBox.y}
             onChange={this.setSvgViewBox}
           />
           
           <input
             className="uk-input"
             placeholder="W"
-            name="width"
-            type="text"
+            name="w"
+            type="number"
+            value={this.state.svgViewBox.w}
             onChange={this.setSvgViewBox}
           />
           
           <input
             className="uk-input"
             placeholder="H"
-            name="height"
-            type="text"
+            name="h"
+            type="number"
+            value={this.state.svgViewBox.h}
             onChange={this.setSvgViewBox}
           />
         </div>
