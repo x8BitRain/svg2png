@@ -27,7 +27,6 @@ class Interface extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.svgReady !== this.props.svgReady) {
-      console.log('major changes!');
       theSVG = document.getElementById('mainSVG');
       this.getSvgViewBox();
     }
@@ -54,7 +53,6 @@ class Interface extends Component {
 
   getSvgViewBox = () => {
     let svgVb = theSVG.getAttribute('viewBox').split(' ');
-    console.log(svgVb);
     this.setState({
       svgViewBox: {
         x: svgVb[0],
@@ -70,7 +68,6 @@ class Interface extends Component {
   setSvgViewBox = (e) => {
     let idx = e.target.name
     svgVbBuffer[idx] = e.target.value;
-    //console.log(svgVbBuffer);
     this.setState({
       svgViewBox: svgVbBuffer
     }, () => {
@@ -105,7 +102,7 @@ class Interface extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props.svgReady);
+    // console.log(this.props.svgReady);
   }
 
   getSvgPng = () => {
@@ -141,6 +138,11 @@ class Interface extends Component {
       })
     );
   };
+
+  copi = (e) => {
+    navigator.clipboard.writeText(e.target.value);
+    e.target.style.border = '3px solid #00b149';
+  }
 
 
   render() {
@@ -194,7 +196,7 @@ class Interface extends Component {
          htmlFor="SvgViewBoxInput">
           ViewBox
           
-          <label for="vboutline"><input onChange={this.setVBOutline} type="checkbox" id="vboutline" name="vboutline" />Outline ViewBox</label>
+          <label htmlFor="vboutline"><input onChange={this.setVBOutline} type="checkbox" id="vboutline" name="vboutline" />Outline ViewBox</label>
         </label>
         <div id="SvgViewBoxInput">
           
@@ -269,26 +271,31 @@ class Interface extends Component {
         <button onClick={this.getSvgPng} className="uk-button uk-button-default" style={{ color: 'white' }}>
           Download PNG
         </button>
-
+        
         <button onClick={this.getPngDataUri} className="uk-button uk-button-default" style={{ color: 'white' }}>
           Get PNG Data URI
         </button>
 
-        <input
+        {this.state.pngDataUri ? <input
           className="uk-input"
           type="text"
+          defaultValue=""
           value={this.state.pngDataUri}
-        />
+          onClick={this.copi}
+        /> : null}
+        
 
         <button onClick={this.getSvgDataUri} className="uk-button uk-button-default" style={{ color: 'white' }}>
           Get SVG Data URI
         </button>
 
-        <input
+        {this.state.svgDataUri ? <input
           className="uk-input"
           type="text"
+          defaultValue=""
           value={this.state.svgDataUri}
-        />
+          onClick={this.copi}
+        /> : null}
 
         
         <a href="https://github.com/x8BitRain/svg-emoji-corrupt"><span className="uk-label label-react">GitHub</span></a>
