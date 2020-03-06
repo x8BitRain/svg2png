@@ -298,7 +298,7 @@ class Interface extends Component {
         /> : null}
 
         
-        <a href="https://github.com/x8BitRain/svg-emoji-corrupt"><span className="uk-label label-react">GitHub</span></a>
+        <a href="https://github.com/x8BitRain/svg2png"><span className="uk-label label-react">GitHub</span></a>
       </React.Fragment>
     );
   }
