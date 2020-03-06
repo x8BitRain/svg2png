@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { saveSvgAsPng } from 'save-svg-as-png';
+import { saveSvgAsPng, svgAsDataUri, svgAsPngUri } from 'save-svg-as-png';
 let style;
 let theSVG;
 let svgVbBuffer = {};
@@ -18,7 +18,10 @@ class Interface extends Component {
       encoderOptions: 10,
       backgroundColor: "",
       inlineCss: "",
-      svgViewBox: {}
+      svgViewBox: {},
+      vboutline: {border: '30px solid green'},
+      pngDataUri: '',
+      svgDataUri: ''
     };
   }
 
@@ -71,11 +74,17 @@ class Interface extends Component {
     this.setState({
       svgViewBox: svgVbBuffer
     }, () => {
-      console.log(this.state.svgViewBox);
-      theSVG.setAttribute('viewBox', `0 0 0 0`)
+      let x = this.state.svgViewBox.x;
+      let y = this.state.svgViewBox.y;
+      let w = this.state.svgViewBox.w;
+      let h = this.state.svgViewBox.h;
+      theSVG.setAttribute('viewBox', `${x} ${y} ${w} ${h}`)
     })
-
   }
+
+  setVBOutline = (e) => {
+    e.target.checked ? theSVG.style.border = "1px solid red" : theSVG.style.border = null
+  };
 
   setInlineCss(e) {
     if (style === undefined) {
@@ -109,6 +118,30 @@ class Interface extends Component {
         backgroundColor: this.state.backgroundColor,
       });
   };
+
+  getPngDataUri = () => {
+    let download = document.querySelector("#scene > svg");
+    svgAsPngUri(download, 
+      {
+        scale: this.state.multiplier,
+        encoderOptions: (this.state.encoderOptions / 10),
+        backgroundColor: this.state.backgroundColor,
+      }).then(uri => 
+        this.setState({
+          pngDataUri: uri
+        })
+      );
+  };
+
+  getSvgDataUri = () => {
+    let download = document.querySelector("#scene > svg");
+    svgAsDataUri(download).then(uri => 
+      this.setState({
+        svgDataUri: uri
+      })
+    );
+  };
+
 
   render() {
     return (
@@ -156,9 +189,12 @@ class Interface extends Component {
         <br/>
 
         <label
+         id="outline"
          className="uk-form-label"
          htmlFor="SvgViewBoxInput">
           ViewBox
+          
+          <label for="vboutline"><input onChange={this.setVBOutline} type="checkbox" id="vboutline" name="vboutline" />Outline ViewBox</label>
         </label>
         <div id="SvgViewBoxInput">
           
@@ -231,8 +267,29 @@ class Interface extends Component {
 
 
         <button onClick={this.getSvgPng} className="uk-button uk-button-default" style={{ color: 'white' }}>
-          Download
+          Download PNG
         </button>
+
+        <button onClick={this.getPngDataUri} className="uk-button uk-button-default" style={{ color: 'white' }}>
+          Get PNG Data URI
+        </button>
+
+        <input
+          className="uk-input"
+          type="text"
+          value={this.state.pngDataUri}
+        />
+
+        <button onClick={this.getSvgDataUri} className="uk-button uk-button-default" style={{ color: 'white' }}>
+          Get SVG Data URI
+        </button>
+
+        <input
+          className="uk-input"
+          type="text"
+          value={this.state.svgDataUri}
+        />
+
         
         <a href="https://github.com/x8BitRain/svg-emoji-corrupt"><span className="uk-label label-react">GitHub</span></a>
       </React.Fragment>
