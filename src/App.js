@@ -11,7 +11,7 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            svgLink: "https://upload.wikimedia.org/wikipedia/commons/f/fd/Ghostscript_Tiger.svg",
+            svgLink: "https://raw.githubusercontent.com/x8BitRain/svg2png/gh-pages/svg.svg",
             svgReady: false
         };
     }
